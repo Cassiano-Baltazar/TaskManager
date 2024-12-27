@@ -2,7 +2,7 @@ object MainForm: TMainForm
   Left = 0
   Top = 0
   Caption = 'Tarefas'
-  ClientHeight = 684
+  ClientHeight = 704
   ClientWidth = 1089
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -11,53 +11,57 @@ object MainForm: TMainForm
   Font.Name = 'Tahoma'
   Font.Style = []
   FormStyle = fsMDIForm
-  Menu = MainMenu1
   OldCreateOrder = False
   Position = poScreenCenter
   WindowState = wsMaximized
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
-  object MainMenu1: TMainMenu
-    Images = cxImageList1
-    Left = 568
-    Top = 292
-    object Tarefas1: TMenuItem
-      Caption = 'Tarefas'
-      ImageIndex = 0
-      OnClick = Tarefas1Click
+  inline TaskViewFrame1: TTaskViewFrame
+    Left = 0
+    Top = 0
+    Width = 1089
+    Height = 704
+    Align = alClient
+    TabOrder = 0
+    ExplicitWidth = 1089
+    ExplicitHeight = 704
+    inherited dxLayoutControl1: TdxLayoutControl
+      Width = 1089
+      Height = 704
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 1089
+      ExplicitHeight = 704
+      inherited gTask: TcxGrid
+        Width = 1069
+        Height = 635
+        ExplicitWidth = 1069
+        ExplicitHeight = 635
+        inherited tvTask: TcxGridDBTableView
+          inherited tvTaskID_TASK: TcxGridDBColumn
+            DataBinding.IsNullValueType = True
+          end
+          inherited tvTaskDESCRIPTION: TcxGridDBColumn
+            DataBinding.IsNullValueType = True
+          end
+          inherited tvTaskPRIORITY: TcxGridDBColumn
+            DataBinding.IsNullValueType = True
+          end
+          inherited tvTaskSTATUS: TcxGridDBColumn
+            DataBinding.IsNullValueType = True
+          end
+          inherited tvTaskCREATED: TcxGridDBColumn
+            DataBinding.IsNullValueType = True
+          end
+          inherited tvTaskFINISHED: TcxGridDBColumn
+            DataBinding.IsNullValueType = True
+          end
+        end
+      end
     end
-  end
-  object cxImageList1: TcxImageList
-    SourceDPI = 96
-    FormatVersion = 1
-    DesignInfo = 13632228
-    ImageInfo = <
-      item
-        ImageClass = 'TdxSmartImage'
-        Image.Data = {
-          89504E470D0A1A0A0000000D49484452000000100000001008060000001FF3FF
-          610000001974455874536F6674776172650041646F626520496D616765526561
-          647971C9653C0000000B744558745469746C65005461736B3BD380CA7C000002
-          0249444154785E9D914F6B534114C58F347FDAD445ED2266AB2520342EB208AF
-          7519057551A16627D8859F2156175D772514311FC0168CDA45105D34096D37A5
-          942AC58DD8E09F45160AD56015ED9BBC99B977E44D1E8F96F740F0C0708799B9
-          87DF3D9330C6E0B86AB51ABCBE07D9972F8527668414F0847C25847B434A85E5
-          E5C738AE0402DD7DD4DE20E632D179301863F235A6A61DB8AE8B76AB3D237357
-          0C11E3D6BD2720E2CDE70F6E5F3E61E0375F9ABE808F1B4F218480333568768F
-          5C148B456C6DBD80521A859B55BC7BD32947089808E3E3A7E1380ED6D65A6835
-          DB10D285140A527A504AA152A9E0EB8F2F20A6E80844068A0DAE96CBC866B3E8
-          743A48269376A55229A4D3699CDDDFC7E7912C581FC6183041E98173A150B00D
-          DD6ED7AFD6E0A8D1002626F02733164FC03E81E6F0229FCF2393C9A0D7EBE1E7
-          EA2ADCDD5DE41717E1D5F7C0C451034D04A90617EF979670B0BD8D8BF3F3D0EB
-          EBF8B6B28252BD8E534343F0144133C71348A5C340BFEFEC60737616BECECDCD
-          21572AD9BD5404134740C4F0028242B51A928CE472282E2C20313C1C1830884D
-          1C0159BC40A1C999C949244647C373A9C9D2C666D01F8C10310914BE63139B01
-          C3931AFF92D28CF80C98D13B38C4FD677B76144F920D4C06BFA388A0C9A0FFEB
-          37D82096A0F9E9ED876BCC6C69C85613EC8DC536FE191B7F3523068D8777AEE3
-          3FF4174D5C4C9E43C2773A0000000049454E44AE426082}
-        FileName = 'Images\Business Objects\BOTask_16x16.png'
-        Keywords = 'Business Objects;BOTask'
-      end>
+    inherited cxImageList1: TcxImageList
+      FormatVersion = 1
+    end
   end
 end

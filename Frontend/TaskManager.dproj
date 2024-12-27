@@ -112,13 +112,14 @@
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="Model\TaskModel.pas"/>
-        <DCCReference Include="View\TaskView.pas">
-            <Form>TaskViewForm</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
         <DCCReference Include="View\TaskEdit.pas">
             <Form>TaskEditForm</Form>
             <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="View\TaskView.pas">
+            <Form>TaskViewFrame</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TFrame</DesignClass>
         </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>

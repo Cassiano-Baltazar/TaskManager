@@ -21,8 +21,12 @@ type
     FClientError: Boolean;
     procedure SetAuthenticator;
     function MD5String(const AString: string): string;
+    procedure PostPut(const AResource, ABody: string; const AMethod: TRESTRequestMethod);
   public
     function GetData(const AResource: string): string;
+    procedure Post(const AResource, ABody: string);
+    procedure Put(const AResource, ABody: string);
+    procedure Delete(const AResource: string);
 
     property User: string read FUser write FUser;
     property Pass: string read FPass write FPass;
@@ -49,6 +53,11 @@ begin
   HTTPBasicAuthenticator1.Password := MD5String(FPass);
 end;
 
+procedure TAPIClient.Delete(const AResource: string);
+begin
+  PostPut(AResource, '', rmDELETE);
+end;
+
 function TAPIClient.GetData(const AResource: string): string;
 var
   Request: TRESTRequest;
@@ -61,6 +70,7 @@ begin
     Request.Client := RESTClient1;
     Request.Response := Response;
 
+    Request.Method := rmGET;
     Request.Resource := AResource;
     Response.ContentType := 'application/json';
     Response.RootElement := 'data';
@@ -87,6 +97,43 @@ begin
   finally
     MD5.Free;
   end;
+end;
+
+procedure TAPIClient.Post(const AResource, ABody: string);
+begin
+  PostPut(AResource, ABody, rmPOST);
+end;
+
+procedure TAPIClient.PostPut(const AResource, ABody: string; const AMethod: TRESTRequestMethod);
+var
+  Request: TRESTRequest;
+  Response: TRESTResponse;
+begin
+  SetAuthenticator;
+  Request := TRESTRequest.Create(Self);
+  Response := TRESTResponse.Create(Self);
+  try
+    Request.Client := RESTClient1;
+    Request.Response := Response;
+
+    Request.Method := AMethod;
+    Request.Resource := AResource;
+    if not ABody.IsEmpty then
+      Request.Body.Add(ABody, ctAPPLICATION_JSON);
+    Request.Execute;
+
+    FNotAuthorized := Response.Status.ClientErrorUnauthorized_401;
+    FSucess := Response.Status.Success;
+    FClientError := Response.Status.ClientError;
+  finally
+    Request.Free;
+    Response.Free;
+  end;
+end;
+
+procedure TAPIClient.Put(const AResource, ABody: string);
+begin
+  PostPut(AResource, ABody, rmPUT);
 end;
 
 end.

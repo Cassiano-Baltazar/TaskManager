@@ -156,6 +156,7 @@ begin
     try
       JsonObject.AddPair('IDTask', TJSONNumber.Create(AQry.FieldByName('ID_TASK').AsInteger));
       JsonObject.AddPair('Description', AQry.FieldByName('DESCRIPTION').AsString);
+      JsonObject.AddPair('Priority', TJSONNumber.Create(AQry.FieldByName('PRIORITY').AsInteger));
       JsonObject.AddPair('Status', TJSONNumber.Create(AQry.FieldByName('STATUS').AsInteger));
       JsonObject.AddPair('Created', DateToISO8601(AQry.FieldByName('CREATED').AsDateTime));
       if AQry.FieldByName('FINISHED').IsNull then
@@ -189,12 +190,15 @@ begin
   qry := SqlServerDAO.GetDataset;
   try
     qry.SQL.Add('DECLARE @LastID INT;');
-    qry.SQL.Add('INSERT INTO DBO.TASK (DESCRIPTION, STATUS, CREATED, FINISHED) VALUES (:DESCRIPTION, :STATUS, :CREATED, :FINISHED);');
+    qry.SQL.Add('INSERT INTO DBO.TASK (DESCRIPTION, PRIORITY, STATUS, CREATED, FINISHED) VALUES (:DESCRIPTION, :PRIORITY, :STATUS, :CREATED, :FINISHED);');
     qry.SQL.Add('SET @LastID = SCOPE_IDENTITY();');
     qry.SQL.Add('SELECT * FROM DBO.TASK WHERE ID_TASK = @LastID;');
     qry.Params.ParamByName('DESCRIPTION').DataType := ftString;
     qry.Params.ParamByName('DESCRIPTION').ParamType := ptInput;
     qry.Params.ParamByName('DESCRIPTION').AsString := ARequest.Description;
+    qry.Params.ParamByName('PRIORITY').DataType := ftInteger;
+    qry.Params.ParamByName('PRIORITY').ParamType := ptInput;
+    qry.Params.ParamByName('PRIORITY').AsInteger := ARequest.Priority;
     qry.Params.ParamByName('STATUS').DataType := ftInteger;
     qry.Params.ParamByName('STATUS').ParamType := ptInput;
     qry.Params.ParamByName('STATUS').AsInteger := ARequest.Status;
@@ -239,6 +243,7 @@ begin
     begin
       qry.Edit;
       qry.FieldByName('DESCRIPTION').AsString := ARequest.Description;
+      qry.FieldByName('PRIORITY').AsInteger := ARequest.Priority;
       qry.FieldByName('STATUS').AsInteger := ARequest.Status;
       qry.FieldByName('FINISHED').Clear;
       if ARequest.Status = 2 then

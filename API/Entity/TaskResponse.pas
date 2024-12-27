@@ -13,9 +13,11 @@ type
     FStatus: Integer;
     FCreated: TDateTime;
     FFinished: TDateTime;
+    FPriority: Integer;
   public
     property IDTask: Int64 read FIDTask write FIDTask;
     property Description: string read FDescription write FDescription;
+    property Priority: Integer read FPriority write FPriority;
     property Status: Integer read FStatus write FStatus;
     property Created: TDateTime read FCreated write FCreated;
     property Finished: TDateTime read FFinished write FFinished;
